@@ -1,0 +1,30 @@
+.card {
+  display:block;
+  /* position: absolute; */
+  background-image: linear-gradient(brown, grey);
+  height: 150px;
+  width:110px;
+  margin: 6px 16px;
+  float:left;
+  border-radius: 8px;
+}
+@media only screen and (max-width: 1024px) {
+    /* For mobile phones: */
+        .card{
+      position:auto;
+      height:69px;
+      width: 51px;
+      margin: 8px 27px;
+
+    }
+    .revealed{
+      font-size: 28px !important;
+    }
+}
+.revealed {
+  margin-top:30%;
+  font-size: 50px;
+  font-weight: Bold;
+  text-align:center;
+  color:white;
+}
