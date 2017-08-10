@@ -21,7 +21,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".board {\r\n    display:block;\r\n    position:relative;\r\n    background-color:lightgrey;\r\n    width: 570px;\r\n    height:650px;\r\n    box-sizing: border-box;\r\n    margin: auto;\r\n    margin-top: 50px;\r\n     min-width:422px;\r\n     border-radius: 10px;\r\n}\r\n    @media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n    .board {\r\n        width:60%;\r\n        height: 340px;\r\n        overflow: inherit;\r\n        background-color:lightgrey;\r\n        max-width: 422px;\r\n    }\r\n}\r\n\r\n", ""]);
+exports.push([module.i, ".board {\r\n    display:block;\r\n    position:relative;\r\n    background-color:lightgrey;\r\n    width: 570px;\r\n    height:650px;\r\n    box-sizing: border-box;\r\n    margin: auto;\r\n    margin-top: 30px;\r\n     min-width:422px;\r\n     border-radius: 10px;\r\n}\r\n    @media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n    .board {\r\n        width:60%;\r\n        height: 340px;\r\n        overflow: inherit;\r\n        background-color:lightgrey;\r\n        max-width: 422px;\r\n    }\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"board\">\n  <app-card *ngFor=\"let card of mainArray\" [var]=\"card\">\n{{card.value}}{{card.text}}\n  </app-card>\n</div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
+module.exports = "<button class=\"btn btn-primary\" (click)=\"ResetGame()\">Reset Game</button>\n<div class=\"board\">\n  <app-card *ngFor=\"let card of mainArray\" [var]=\"card\" [gameArray]=\"mainArray\">\n{{card.value}}{{card.text}}\n  </app-card>\n</div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
 
 /***/ }),
 
@@ -62,6 +62,9 @@ var AppComponent = (function () {
     function AppComponent(gameFuntions) {
         this.gameFuntions = gameFuntions;
     }
+    AppComponent.prototype.ResetGame = function () {
+        this.mainArray = this.gameFuntions.InitializeArray();
+    };
     AppComponent.prototype.ngOnInit = function () {
         this.mainArray = this.gameFuntions.InitializeArray();
         console.log(this.mainArray);
@@ -143,7 +146,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".card {\r\n  display:block;\r\n  /* position: absolute; */\r\n  background-image: linear-gradient(brown, grey);\r\n  height: 150px;\r\n  width:110px;\r\n  margin: 6px 16px;\r\n  float:left;\r\n  border-radius: 8px;\r\n}\r\n.glyphicon {\r\n  font-size: medium;\r\n  color: white;\r\n  /* line-height:0; */\r\n}\r\n@media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n        .card{\r\n      position:auto;\r\n      height:69px;\r\n      width: 51px 100%;\r\n      margin: 8px 27px;\r\n\r\n    }\r\n    .revealed{\r\n      font-size: 28px !important;\r\n    }\r\n}\r\n.revealed {\r\n  /* margin-top:30%; */\r\n  font-size: 35px;\r\n  font-weight: Bold;\r\n  text-align:center;\r\n  color:white;\r\n   max-height: 150px;\r\n}\r\n", ""]);
+exports.push([module.i, ".card {\r\n  display:block;\r\n  /* position: absolute; */\r\n  background-image: linear-gradient(brown, grey);\r\n  height: 150px;\r\n  width:110px;\r\n  margin: 6px 16px;\r\n  float:left;\r\n  border-radius: 8px;\r\n}\r\n.glyphicon {\r\n  font-size: medium;\r\n  color: white;\r\n  max-height: 8px;\r\n  /* line-height:0; */\r\n}\r\n@media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n        .card{\r\n      position:auto;\r\n      height:69px;\r\n      width: 51px 100%;\r\n      margin: 8px 27px;\r\n\r\n    }\r\n    .revealed{\r\n      font-size: 28px !important;\r\n    }\r\n}\r\n.revealed {\r\n  /* margin-top:30%; */\r\n  font-size: 35px;\r\n  font-weight: Bold;\r\n  text-align:center;\r\n  color:white;\r\n   max-height: 150px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -156,7 +159,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/card/card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card\"(click)=\"Reveal()\" (mouseenter)=\"ShowArrows()\" (mouseleave)=\"ShowArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n  <ng-content></ng-content>\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"hover\" >\n    <div class=\"glyphicon glyphicon-arrow-up\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-left\"></div>\n     <div class=\"glyphicon glyphicon-arrow-right\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-down\"></div>\n    </div>\n</div>\n\n"
+module.exports = "  <div class=\"card\"(click)=\"Reveal()\" (mouseenter)=\"ShowArrows()\" (mouseleave)=\"ShowArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n  <ng-content></ng-content>\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"hover\" >\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\">\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\">\n\n    </div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -187,8 +190,10 @@ var CardComponent = (function () {
     }
     CardComponent.prototype.Reveal = function () {
         var _this = this;
-        this.var.revealed = !this.var.revealed;
-        setTimeout(function () { _this.var.revealed = !_this.var.revealed; }, 4000);
+        if (this.var.canbeRevealed) {
+            this.var.revealed = !this.var.revealed;
+            setTimeout(function () { _this.var.revealed = !_this.var.revealed; }, 4000);
+        }
     };
     CardComponent.prototype.ngOnInit = function () { };
     CardComponent.prototype.ShowArrows = function () {
@@ -200,6 +205,10 @@ __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */])(),
     __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__card_model__["a" /* Card */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__card_model__["a" /* Card */]) === "function" && _a || Object)
 ], CardComponent.prototype, "var", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */])(),
+    __metadata("design:type", Array)
+], CardComponent.prototype, "gameArray", void 0);
 CardComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
         selector: 'app-card',
@@ -231,7 +240,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 var Card = (function () {
-    function Card(value, revealed, text) {
+    function Card(canbeRevealed, value, revealed, text) {
+        this.canbeRevealed = canbeRevealed;
         this.value = value;
         this.revealed = revealed;
         this.text = text;
@@ -240,7 +250,7 @@ var Card = (function () {
 }());
 Card = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [Number, Boolean, String])
+    __metadata("design:paramtypes", [Boolean, Number, Boolean, String])
 ], Card);
 
 //# sourceMappingURL=card.model.js.map
@@ -266,8 +276,186 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CardService = (function () {
     function CardService() {
     }
-    CardService.prototype.moveHorizontal = function (card) { };
-    CardService.prototype.moveVertical = function (card) { };
+    CardService.prototype.moveLeft = function (card, array) {
+        for (var i = 0; i < 16; i++) {
+            if (card.text === array[i].text && card.value === array[i].value) {
+                this.row = Math.floor(i / 4) + 1;
+                card.canbeRevealed = false;
+            }
+        }
+        var tempEl;
+        if (this.row === 1) {
+            tempEl = array[0];
+            array[0] = array[1];
+            array[1] = array[2];
+            array[2] = array[3];
+            array[3] = tempEl;
+            array[3].revealed = true;
+            array[3].canbeRevealed = false;
+        }
+        else if (this.row === 2) {
+            tempEl = array[4];
+            array[4] = array[5];
+            array[5] = array[6];
+            array[6] = array[7];
+            array[7] = tempEl;
+            array[7].revealed = true;
+            array[7].canbeRevealed = false;
+        }
+        else if (this.row === 3) {
+            tempEl = array[8];
+            array[8] = array[9];
+            array[9] = array[10];
+            array[10] = array[11];
+            array[11] = tempEl;
+            array[11].revealed = true;
+            array[11].canbeRevealed = false;
+        }
+        else {
+            tempEl = array[12];
+            array[12] = array[13];
+            array[13] = array[14];
+            array[14] = array[15];
+            array[15] = tempEl;
+            array[15].revealed = true;
+            array[15].canbeRevealed = false;
+        }
+    };
+    CardService.prototype.moveRight = function (card, array) {
+        for (var i = 0; i < 16; i++) {
+            if (card.text === array[i].text && card.value === array[i].value) {
+                this.row = Math.floor(i / 4) + 1;
+                array[i].canbeRevealed = false;
+            }
+        }
+        var tempEl;
+        if (this.row === 1) {
+            tempEl = array[3];
+            array[3] = array[2];
+            array[2] = array[1];
+            array[1] = array[0];
+            array[0] = tempEl;
+            array[0].revealed = true;
+            array[0].canbeRevealed = false;
+        }
+        else if (this.row === 2) {
+            tempEl = array[7];
+            array[7] = array[6];
+            array[6] = array[5];
+            array[5] = array[4];
+            array[4] = tempEl;
+            array[4].revealed = true;
+            array[4].canbeRevealed = false;
+        }
+        else if (this.row === 3) {
+            tempEl = array[11];
+            array[11] = array[10];
+            array[10] = array[9];
+            array[9] = array[8];
+            array[8] = tempEl;
+            array[8].revealed = true;
+            array[8].canbeRevealed = false;
+        }
+        else {
+            tempEl = array[15];
+            array[15] = array[14];
+            array[14] = array[13];
+            array[13] = array[12];
+            array[12] = tempEl;
+            array[12].revealed = true;
+            array[12].canbeRevealed = false;
+        }
+    };
+    CardService.prototype.moveUp = function (card, array) {
+        for (var i = 0; i < 16; i++) {
+            if (card.text === array[i].text && card.value === array[i].value) {
+                this.col = i % 4 + 1;
+                card.canbeRevealed = false;
+            }
+        }
+        var tempEl;
+        if (this.col === 1) {
+            tempEl = array[0];
+            array[0] = array[4];
+            array[4] = array[8];
+            array[8] = array[12];
+            array[12] = tempEl;
+            array[12].revealed = true;
+            array[12].canbeRevealed = false;
+        }
+        else if (this.col === 2) {
+            tempEl = array[1];
+            array[1] = array[5];
+            array[5] = array[9];
+            array[9] = array[13];
+            array[13] = tempEl;
+            array[13].revealed = true;
+            array[13].canbeRevealed = false;
+        }
+        else if (this.col === 3) {
+            tempEl = array[2];
+            array[2] = array[6];
+            array[6] = array[10];
+            array[10] = array[14];
+            array[14] = tempEl;
+            array[14].revealed = true;
+            array[14].canbeRevealed = false;
+        }
+        else {
+            tempEl = array[3];
+            array[3] = array[7];
+            array[7] = array[11];
+            array[11] = array[15];
+            array[15] = tempEl;
+            array[15].revealed = true;
+            array[15].canbeRevealed = false;
+        }
+    };
+    CardService.prototype.moveDown = function (card, array) {
+        for (var i = 0; i < 16; i++) {
+            if (card.text === array[i].text && card.value === array[i].value) {
+                this.col = i % 4 + 1;
+                card.canbeRevealed = false;
+            }
+        }
+        var tempEl;
+        if (this.col === 1) {
+            tempEl = array[12];
+            array[12] = array[8];
+            array[8] = array[4];
+            array[4] = array[0];
+            array[0] = tempEl;
+            array[0].revealed = true;
+            array[0].canbeRevealed = false;
+        }
+        else if (this.col === 2) {
+            tempEl = array[13];
+            array[13] = array[9];
+            array[9] = array[5];
+            array[5] = array[1];
+            array[1] = tempEl;
+            array[1].revealed = true;
+            array[1].canbeRevealed = false;
+        }
+        else if (this.col === 3) {
+            tempEl = array[14];
+            array[14] = array[10];
+            array[10] = array[6];
+            array[6] = array[2];
+            array[2] = tempEl;
+            array[2].revealed = true;
+            array[2].canbeRevealed = false;
+        }
+        else {
+            tempEl = array[15];
+            array[15] = array[11];
+            array[11] = array[7];
+            array[7] = array[3];
+            array[3] = tempEl;
+            array[3].revealed = true;
+            array[3].canbeRevealed = false;
+        }
+    };
     return CardService;
 }());
 CardService = __decorate([
@@ -323,7 +511,7 @@ var GameFunctions = (function () {
             else {
                 letter = 'D';
             }
-            var card = new __WEBPACK_IMPORTED_MODULE_0__card_card_model__["a" /* Card */](no, false, letter);
+            var card = new __WEBPACK_IMPORTED_MODULE_0__card_card_model__["a" /* Card */](true, no, false, letter);
             this.gameArray.push(card);
         }
         return this.gameArray;

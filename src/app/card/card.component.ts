@@ -10,10 +10,13 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   @Input() var: Card;
+  @Input() gameArray: Card[];
   hover = false;
   Reveal() {
+    if (this.var.canbeRevealed) {
     this.var.revealed = !this.var.revealed;
     setTimeout(() => {this.var.revealed = !this.var.revealed; }, 4000);
+    }
   }
   constructor(public cardService:  CardService) {
   }

@@ -11,6 +11,9 @@ import {GameFunctions} from './game-functions.service';
 export class AppComponent implements OnInit {
 mainArray: Card[];
   constructor( public gameFuntions: GameFunctions) { }
+  ResetGame() {
+    this.mainArray = this.gameFuntions.InitializeArray();
+  }
     ngOnInit() {
       this.mainArray = this.gameFuntions.InitializeArray();
       console.log(this.mainArray);

@@ -19,7 +19,7 @@ export class GameFunctions {
       }else {
         letter = 'D';
       }
-      const card = new Card(no, false, letter);
+      const card = new Card(true, no, false, letter);
       this.gameArray.push(card);
     }
     return this.gameArray;
