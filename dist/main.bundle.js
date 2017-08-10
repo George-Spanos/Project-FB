@@ -156,7 +156,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/card/card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card\"(click)=\"Reveal()\" (mouseenter)=\"ShowArrows()\" (mouseleave)=\"ShowArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n  <ng-content></ng-content>\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly; flex-wrap:wrap;\"\n  *ngIf=\"hover\" >\n    <div class=\"glyphicon glyphicon-arrow-up\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-left\"></div>\n     <div class=\"glyphicon glyphicon-arrow-right\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-down\"></div>\n    </div>\n</div>\n\n"
+module.exports = "  <div class=\"card\"(click)=\"Reveal()\" (mouseenter)=\"ShowArrows()\" (mouseleave)=\"ShowArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n  <ng-content></ng-content>\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"hover\" >\n    <div class=\"glyphicon glyphicon-arrow-up\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-left\"></div>\n     <div class=\"glyphicon glyphicon-arrow-right\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-down\"></div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
