@@ -15,4 +15,5 @@ mainArray: Card[];
       this.mainArray = this.gameFuntions.InitializeArray();
       console.log(this.mainArray);
     }
+    MoveFunction() {}
   }

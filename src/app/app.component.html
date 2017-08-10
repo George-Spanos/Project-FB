@@ -1,4 +1,7 @@
 <div class="board">
-  <app-card *ngFor="let card of mainArray" [var]="card">{{card.value}}{{card.text}} </app-card>
+  <app-card *ngFor="let card of mainArray" [var]="card">
+{{card.value}}{{card.text}}
+  </app-card>
 </div>
-<button class="btn btn-primary col-xs-12" style="width: 30%; margin:10px 35% " (click)="this.gameFuntions.shuffleArray(mainArray)">Shuffle Array</button>
+<button class="btn btn-primary col-xs-12" style="width: 30%; margin:10px 35% "
+(click)="this.gameFuntions.shuffleArray(mainArray)">Shuffle Array</button>

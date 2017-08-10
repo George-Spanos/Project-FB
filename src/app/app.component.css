@@ -10,7 +10,7 @@
      min-width:422px;
      border-radius: 10px;
 }
-@media only screen and (max-width: 1024px) {
+    @media only screen and (max-width: 1024px) {
     /* For mobile phones: */
     .board {
         width:60%;
@@ -19,5 +19,5 @@
         background-color:lightgrey;
         max-width: 422px;
     }
-
 }
+

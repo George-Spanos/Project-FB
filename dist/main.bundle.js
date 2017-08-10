@@ -21,7 +21,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".board {\r\n    display:block;\r\n    position:relative;\r\n    background-color:lightgrey;\r\n    width: 570px;\r\n    height:650px;\r\n    box-sizing: border-box;\r\n    margin: auto;\r\n    margin-top: 50px;\r\n     min-width:422px;\r\n     border-radius: 10px;\r\n}\r\n@media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n    .board {\r\n        width:60%;\r\n        height: 340px;\r\n        overflow: inherit;\r\n        background-color:lightgrey;\r\n        max-width: 422px;\r\n    }\r\n\r\n}\r\n", ""]);
+exports.push([module.i, ".board {\r\n    display:block;\r\n    position:relative;\r\n    background-color:lightgrey;\r\n    width: 570px;\r\n    height:650px;\r\n    box-sizing: border-box;\r\n    margin: auto;\r\n    margin-top: 50px;\r\n     min-width:422px;\r\n     border-radius: 10px;\r\n}\r\n    @media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n    .board {\r\n        width:60%;\r\n        height: 340px;\r\n        overflow: inherit;\r\n        background-color:lightgrey;\r\n        max-width: 422px;\r\n    }\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"board\">\n  <app-card *ngFor=\"let card of mainArray\" [var]=\"card\">{{card.value}}{{card.text}} </app-card>\n</div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \" (click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
+module.exports = "<div class=\"board\">\n  <app-card *ngFor=\"let card of mainArray\" [var]=\"card\">\n{{card.value}}{{card.text}}\n  </app-card>\n</div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
 
 /***/ }),
 
@@ -66,6 +66,7 @@ var AppComponent = (function () {
         this.mainArray = this.gameFuntions.InitializeArray();
         console.log(this.mainArray);
     };
+    AppComponent.prototype.MoveFunction = function () { };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -142,7 +143,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".card {\r\n  display:block;\r\n  /* position: absolute; */\r\n  background-image: linear-gradient(brown, grey);\r\n  height: 150px;\r\n  width:110px;\r\n  margin: 6px 16px;\r\n  float:left;\r\n  border-radius: 8px;\r\n}\r\n@media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n        .card{\r\n      position:auto;\r\n      height:69px;\r\n      width: 51px;\r\n      margin: 8px 27px;\r\n\r\n    }\r\n    .revealed{\r\n      font-size: 28px !important;\r\n    }\r\n}\r\n.revealed {\r\n  margin-top:30%;\r\n  font-size: 50px;\r\n  font-weight: Bold;\r\n  text-align:center;\r\n  color:white;\r\n}\r\n", ""]);
+exports.push([module.i, ".card {\r\n  display:block;\r\n  /* position: absolute; */\r\n  background-image: linear-gradient(brown, grey);\r\n  height: 150px;\r\n  width:110px;\r\n  margin: 6px 16px;\r\n  float:left;\r\n  border-radius: 8px;\r\n}\r\n.glyphicon {\r\n  font-size: medium;\r\n  color: white;\r\n  /* line-height:0; */\r\n}\r\n@media only screen and (max-width: 1024px) {\r\n    /* For mobile phones: */\r\n        .card{\r\n      position:auto;\r\n      height:69px;\r\n      width: 51px 100%;\r\n      margin: 8px 27px;\r\n\r\n    }\r\n    .revealed{\r\n      font-size: 28px !important;\r\n    }\r\n}\r\n.revealed {\r\n  /* margin-top:30%; */\r\n  font-size: 35px;\r\n  font-weight: Bold;\r\n  text-align:center;\r\n  color:white;\r\n   max-height: 150px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -155,7 +156,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/card/card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card\" (click)=\"Reveal()\">\n <p  class=\"revealed\" *ngIf=\"this.var.revealed\"><ng-content></ng-content></p>\n</div>\n\n"
+module.exports = "  <div class=\"card\"(click)=\"Reveal()\" (mouseenter)=\"ShowArrows()\" (mouseleave)=\"ShowArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n<ng-content></ng-content>\n   </div>\n       <div style=\"width:100%; height:100%; display:flex; justify-content:space-evenly; flex-wrap:wrap;\" *ngIf=\"hover\" >\n    <div class=\"glyphicon glyphicon-arrow-up\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-left\"></div>\n     <div class=\"glyphicon glyphicon-arrow-right\" ></div>\n    <div class=\"glyphicon glyphicon-arrow-down\"></div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -182,6 +183,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CardComponent = (function () {
     function CardComponent(cardService) {
         this.cardService = cardService;
+        this.hover = false;
     }
     CardComponent.prototype.Reveal = function () {
         var _this = this;
@@ -189,6 +191,9 @@ var CardComponent = (function () {
         setTimeout(function () { _this.var.revealed = !_this.var.revealed; }, 4000);
     };
     CardComponent.prototype.ngOnInit = function () { };
+    CardComponent.prototype.ShowArrows = function () {
+        this.hover = !this.hover;
+    };
     return CardComponent;
 }());
 __decorate([

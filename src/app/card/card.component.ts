@@ -10,6 +10,7 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   @Input() var: Card;
+  hover = false;
   Reveal() {
     this.var.revealed = !this.var.revealed;
     setTimeout(() => {this.var.revealed = !this.var.revealed; }, 4000);
@@ -17,4 +18,7 @@ export class CardComponent implements OnInit {
   constructor(public cardService:  CardService) {
   }
   ngOnInit() { }
+  ShowArrows() {
+    this.hover = !this.hover;
+  }
 }
