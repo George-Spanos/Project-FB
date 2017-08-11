@@ -64,6 +64,7 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.ResetGame = function () {
         this.mainArray = this.gameFuntions.InitializeArray();
+        alert('double click to reveal a card!');
     };
     AppComponent.prototype.ngOnInit = function () {
     };

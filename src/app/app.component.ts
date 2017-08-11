@@ -13,6 +13,7 @@ mainArray: Card[];
   constructor( public gameFuntions: GameFunctions) { }
   ResetGame() {
     this.mainArray = this.gameFuntions.InitializeArray();
+    alert ('double click to reveal a card!');
   }
   ngOnInit() {
     }
