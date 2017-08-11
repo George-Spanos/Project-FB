@@ -13,8 +13,11 @@ export class CardComponent implements OnInit {
   @Input() gameArray: Card[];
   hovered: boolean;
   Reveal() {
-    if (this.var.revealPhase) {
+    if (this.var.revealPhase && !this.var.revealed) {
     this.var.revealed = !this.var.revealed;
+    for ( let i = 1; i < 16; i++) {
+      this.gameArray[i].revealPhase = false;
+    }
     setTimeout(() => {
       this.var.revealed = !this.var.revealed;
     for (let i = 0; i < 16; i++) {

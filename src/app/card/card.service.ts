@@ -9,7 +9,7 @@ col: number;
       for (let i = 0; i < 16 ; i++) {
         if (card.text === array[i].text && card.value === array[i].value) {
         this.row = Math.floor(i / 4) + 1;
-        card.revealPhase = false;
+        array[i].revealPhase = false;
       }
     }let tempEl: Card;
     if ( this.row === 1 ) {
@@ -46,11 +46,14 @@ col: number;
       array[15].revealed = true;
       array[15].revealPhase = false;
     }
-    for (let i = 0; i < 16 ; i++) {
-      array[i].MovePhase = false;
-      array[i].hovered = false;
-     }setTimeout(alert('you can reveal a card!'), 2000);
-    }
+    array.forEach( (el) => {
+      { el.MovePhase = false;
+        el.hovered = false;
+        el.revealPhase = true;
+      }
+      } );
+    alert('you can reveal a card!');
+  }
   moveRight(card: Card, array: Card[]) {
      for (let i = 0; i < 16 ; i++) {
       if (card.text === array[i].text && card.value === array[i].value) {
@@ -91,10 +94,12 @@ col: number;
         array[12] = tempEl;
         array[12].revealed = true;
         array[12].revealPhase = false;
-    }for (let i = 0; i < 16 ; i++) {
-      array[i].MovePhase = false;
-      array[i].hovered = false;
-    }setTimeout(alert('you can reveal a card!'), 2000);
+    }array.forEach( (el) => {
+      { el.MovePhase = false;
+        el.hovered = false;
+        el.revealPhase = true; }
+      } );
+      setTimeout(alert('you can reveal a card!'), 2000);
   }
   moveUp(card: Card, array: Card[]) {
  for (let i = 0; i < 16 ; i++) {
@@ -136,10 +141,12 @@ col: number;
       array[15] = tempEl;
       array[15].revealed = true;
       array[15].revealPhase = false;
-    }for (let i = 0; i < 16 ; i++) {
-      array[i].MovePhase = false;
-      array[i].hovered = false;
-    }setTimeout(alert('you can reveal a card!'), 2000);
+    }array.forEach( (el) => {
+      { el.MovePhase = false;
+        el.hovered = false;
+        el.revealPhase = true; }
+      } );
+      setTimeout(alert('you can reveal a card!'), 2000);
   }
   moveDown (card: Card, array: Card[]) {
     for (let i = 0; i < 16 ; i++) {
@@ -181,9 +188,11 @@ col: number;
       array[3] = tempEl;
       array[3].revealed = true;
       array[3].revealPhase = false;
-    }for (let i = 0; i < 16 ; i++) {
-      array[i].MovePhase = false;
-      array[i].hovered = false;
-    }setTimeout(alert('you can reveal a card!'), 2000);
+    }array.forEach( (el) => {
+        { el.MovePhase = false;
+          el.hovered = false;
+          el.revealPhase = true; }
+        } );
+      setTimeout(alert('you can reveal a card!'), 2000);
   }
 }

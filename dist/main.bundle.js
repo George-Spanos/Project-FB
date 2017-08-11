@@ -157,7 +157,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/card/card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card\"(click)=\"Reveal()\" (mouseenter)=\"ShowArrows()\"\n   (mouseleave)=\"HideArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n  <ng-content></ng-content>\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"this.var.hovered\" >\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\" >\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\" >\n\n    </div>\n    </div>\n</div>\n\n"
+module.exports = "  <div class=\"card\"(dblclick)=\"Reveal()\" (mouseenter)=\"ShowArrows()\"\n   (mouseleave)=\"HideArrows()\">\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\">\n  <ng-content></ng-content>\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"this.var.hovered\" >\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\" >\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\" >\n\n    </div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -187,8 +187,11 @@ var CardComponent = (function () {
     }
     CardComponent.prototype.Reveal = function () {
         var _this = this;
-        if (this.var.revealPhase) {
+        if (this.var.revealPhase && !this.var.revealed) {
             this.var.revealed = !this.var.revealed;
+            for (var i = 1; i < 16; i++) {
+                this.gameArray[i].revealPhase = false;
+            }
             setTimeout(function () {
                 _this.var.revealed = !_this.var.revealed;
                 for (var i = 0; i < 16; i++) {
@@ -292,7 +295,7 @@ var CardService = (function () {
         for (var i = 0; i < 16; i++) {
             if (card.text === array[i].text && card.value === array[i].value) {
                 this.row = Math.floor(i / 4) + 1;
-                card.revealPhase = false;
+                array[i].revealPhase = false;
             }
         }
         var tempEl;
@@ -332,11 +335,14 @@ var CardService = (function () {
             array[15].revealed = true;
             array[15].revealPhase = false;
         }
-        for (var i = 0; i < 16; i++) {
-            array[i].MovePhase = false;
-            array[i].hovered = false;
-        }
-        setTimeout(alert('you can reveal a card!'), 2000);
+        array.forEach(function (el) {
+            {
+                el.MovePhase = false;
+                el.hovered = false;
+                el.revealPhase = true;
+            }
+        });
+        alert('you can reveal a card!');
     };
     CardService.prototype.moveRight = function (card, array) {
         for (var i = 0; i < 16; i++) {
@@ -382,10 +388,13 @@ var CardService = (function () {
             array[12].revealed = true;
             array[12].revealPhase = false;
         }
-        for (var i = 0; i < 16; i++) {
-            array[i].MovePhase = false;
-            array[i].hovered = false;
-        }
+        array.forEach(function (el) {
+            {
+                el.MovePhase = false;
+                el.hovered = false;
+                el.revealPhase = true;
+            }
+        });
         setTimeout(alert('you can reveal a card!'), 2000);
     };
     CardService.prototype.moveUp = function (card, array) {
@@ -432,10 +441,13 @@ var CardService = (function () {
             array[15].revealed = true;
             array[15].revealPhase = false;
         }
-        for (var i = 0; i < 16; i++) {
-            array[i].MovePhase = false;
-            array[i].hovered = false;
-        }
+        array.forEach(function (el) {
+            {
+                el.MovePhase = false;
+                el.hovered = false;
+                el.revealPhase = true;
+            }
+        });
         setTimeout(alert('you can reveal a card!'), 2000);
     };
     CardService.prototype.moveDown = function (card, array) {
@@ -482,10 +494,13 @@ var CardService = (function () {
             array[3].revealed = true;
             array[3].revealPhase = false;
         }
-        for (var i = 0; i < 16; i++) {
-            array[i].MovePhase = false;
-            array[i].hovered = false;
-        }
+        array.forEach(function (el) {
+            {
+                el.MovePhase = false;
+                el.hovered = false;
+                el.revealPhase = true;
+            }
+        });
         setTimeout(alert('you can reveal a card!'), 2000);
     };
     return CardService;

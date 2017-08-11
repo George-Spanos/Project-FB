@@ -1,4 +1,4 @@
-  <div class="card"(click)="Reveal()" (mouseenter)="ShowArrows()"
+  <div class="card"(dblclick)="Reveal()" (mouseenter)="ShowArrows()"
    (mouseleave)="HideArrows()">
  <div class="revealed"  *ngIf="this.var.revealed">
   <ng-content></ng-content>
