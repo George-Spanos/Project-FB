@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 
 import {Card} from './card/card.model';
 import {GameFunctions} from './game-functions.service';
@@ -14,9 +14,7 @@ mainArray: Card[];
   ResetGame() {
     this.mainArray = this.gameFuntions.InitializeArray();
   }
-    ngOnInit() {
-      this.mainArray = this.gameFuntions.InitializeArray();
-      console.log(this.mainArray);
+  ngOnInit() {
     }
     MoveFunction() {}
   }

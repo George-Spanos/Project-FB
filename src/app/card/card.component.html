@@ -1,21 +1,22 @@
-  <div class="card"(click)="Reveal()" (mouseenter)="ShowArrows()" (mouseleave)="ShowArrows()">
+  <div class="card"(click)="Reveal()" (mouseenter)="ShowArrows()"
+   (mouseleave)="HideArrows()">
  <div class="revealed"  *ngIf="this.var.revealed">
   <ng-content></ng-content>
   </div>
  <div style="width:100%; height:100%; display:flex;
  justify-content:space-evenly;"
-  *ngIf="hover" >
+  *ngIf="this.var.hovered" >
     <div class="glyphicon glyphicon-arrow-up"
     (click)="this.cardService.moveUp(this.var,this.gameArray)">
     </div>
     <div class="glyphicon glyphicon-arrow-left"
-    (click)="this.cardService.moveLeft(this.var,this.gameArray)">
+    (click)="this.cardService.moveLeft(this.var,this.gameArray)" >
     </div>
      <div class="glyphicon glyphicon-arrow-right"
-     (click)="this.cardService.moveRight(this.var,this.gameArray)">
+     (click)="this.cardService.moveRight(this.var,this.gameArray)" >
     </div>
     <div class="glyphicon glyphicon-arrow-down"
-    (click)="this.cardService.moveDown(this.var,this.gameArray)">
+    (click)="this.cardService.moveDown(this.var,this.gameArray)" >
 
     </div>
     </div>

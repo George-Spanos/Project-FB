@@ -11,17 +11,30 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 export class CardComponent implements OnInit {
   @Input() var: Card;
   @Input() gameArray: Card[];
-  hover = false;
+  hovered: boolean;
   Reveal() {
-    if (this.var.canbeRevealed) {
+    if (this.var.revealPhase) {
     this.var.revealed = !this.var.revealed;
-    setTimeout(() => {this.var.revealed = !this.var.revealed; }, 4000);
+    setTimeout(() => {
+      this.var.revealed = !this.var.revealed;
+    for (let i = 0; i < 16; i++) {
+      this.gameArray[i].MovePhase = !this.gameArray[i].MovePhase;
+    }
+    alert('you can move a card!'); }
+    , 4000);
     }
   }
   constructor(public cardService:  CardService) {
   }
   ngOnInit() { }
   ShowArrows() {
-    this.hover = !this.hover;
+    if (this.var.MovePhase) {
+      this.var.hovered = true;
+    }
+  }
+  HideArrows() {
+    if (this.var.MovePhase) {
+      this.var.hovered = false;
+    }
   }
 }

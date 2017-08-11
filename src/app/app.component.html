@@ -1,4 +1,4 @@
-<button class="btn btn-primary" (click)="ResetGame()">Reset Game</button>
+<button class="btn btn-primary" (click)="ResetGame()">Start Game!</button>
 <div class="board">
   <app-card *ngFor="let card of mainArray" [var]="card" [gameArray]="mainArray">
 {{card.value}}{{card.text}}

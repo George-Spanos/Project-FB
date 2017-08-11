@@ -1,5 +1,6 @@
 import {Card} from './card/card.model';
 import {Injectable} from '@angular/core';
+import {Output, EventEmitter} from '@angular/core';
 @Injectable()
 export class GameFunctions {
   gameArray: Card[];
@@ -19,7 +20,7 @@ export class GameFunctions {
       }else {
         letter = 'D';
       }
-      const card = new Card(true, no, false, letter);
+      const card = new Card(false, false, true, no, false, letter);
       this.gameArray.push(card);
     }
     return this.gameArray;
