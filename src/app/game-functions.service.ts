@@ -4,7 +4,7 @@ import {Output, EventEmitter} from '@angular/core';
 @Injectable()
 export class GameFunctions {
   gameArray: Card[];
-  InitializeArray() {
+  InitializeArray() { /* Inittialization of the array. Returns the array, while having no input. */
     this.gameArray = [];
     for (let i = 0; i < 16; i++) {
       let letter = '';
@@ -25,7 +25,7 @@ export class GameFunctions {
     }
     return this.gameArray;
   }
-  shuffleArray(a: Card[]) {
+  shuffleArray(a: Card[]) { /* Shuffles the array with the Fisher Yates algorithm */
     for (let i = a.length; i; i--) {
         const j = Math.floor(Math.random() * i);
         [a[i - 1], a[j]] = [a[j], a[i - 1]];

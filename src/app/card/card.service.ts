@@ -2,15 +2,20 @@ import {Card} from './card.model';
 import {Injectable} from '@angular/core';
 @Injectable()
 export class CardService {
-row: number;
-col: number;
+row: number; // the row of each clicked card
+col: number; // the column of each clicked card
   constructor() {}
+  // the following functions are the move functions.
   moveLeft(card: Card , array: Card[]) {
-      for (let i = 0; i < 16 ; i++) {
+      for (let i = 0; i < 16 ; i++) { // Find the position and row/col of the clicked card
         if (card.text === array[i].text && card.value === array[i].value) {
         this.row = Math.floor(i / 4) + 1;
-        array[i].revealPhase = false;
+       // array[i].revealPhase = false;
+       // Ending the reveal phase (not needed prolly)
       }
+      // when you find the row, you swap the elements without using the iterator.
+      // you reveal the card that gets pulled out (remember revealed is the same for temp reveal and perma reveal)
+      // set the reveal Phase of the perma revealed card to false.
     }let tempEl: Card;
     if ( this.row === 1 ) {
       tempEl = array[0];
