@@ -17,5 +17,4 @@ mainArray: Card[]; // the main game array that is binded to GameArray (one way b
   }
   ngOnInit() {
     }
-    MoveFunction() {}
   }

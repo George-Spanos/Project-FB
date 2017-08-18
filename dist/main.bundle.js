@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<button class=\"btn btn-primary\" (click)=\"ResetGame()\">Start Game!</button> <!-- Initialize game button -->\n<div class=\"board\"> <!-- Background Box (grey) -->\n  <app-card *ngFor=\"let card of mainArray\" [var]=\"card\" [gameArray]=\"mainArray\"> <!--Card Component -->\n{{card.value}}{{card.text}}\n  </app-card>\n</div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
+module.exports = "<div style=\"width:100%\">\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a href=\"#\">Same Numbers</a></li>\n        <li><a href=\"#\">Same Color</a></li>\n        <li><a href=\"#\">Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!--Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
 
 /***/ }),
 
@@ -68,11 +68,10 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.ngOnInit = function () {
     };
-    AppComponent.prototype.MoveFunction = function () { };
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")],
@@ -98,6 +97,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__game_functions_service__ = __webpack_require__("../../../../../src/app/game-functions.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__card_card_service__ = __webpack_require__("../../../../../src/app/card/card.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__card_card_model__ = __webpack_require__("../../../../../src/app/card/card.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_dropdown_directive__ = __webpack_require__("../../../../../src/app/shared/dropdown.directive.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -105,6 +105,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -123,6 +124,7 @@ AppModule = __decorate([
         declarations: [
             __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
             __WEBPACK_IMPORTED_MODULE_4__card_card_component__["a" /* CardComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__shared_dropdown_directive__["a" /* DropdownDirective */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -227,7 +229,7 @@ __decorate([
     __metadata("design:type", Array)
 ], CardComponent.prototype, "gameArray", void 0);
 CardComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* Component */])({
         selector: 'app-card',
         template: __webpack_require__("../../../../../src/app/card/card.component.html"),
         styles: [__webpack_require__("../../../../../src/app/card/card.component.css")],
@@ -596,6 +598,51 @@ GameFunctions = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/shared/dropdown.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DropdownDirective; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DropdownDirective = (function () {
+    function DropdownDirective() {
+        this.isOpen = false;
+    }
+    DropdownDirective.prototype.toggleOpen = function () {
+        this.isOpen = !this.isOpen;
+    };
+    return DropdownDirective;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* HostBinding */])('class.open'),
+    __metadata("design:type", Object)
+], DropdownDirective.prototype, "isOpen", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_6" /* HostListener */])('click'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], DropdownDirective.prototype, "toggleOpen", null);
+DropdownDirective = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Directive */])({
+        selector: '[appDropdown]'
+    })
+], DropdownDirective);
+
+//# sourceMappingURL=dropdown.directive.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/environments/environment.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -634,7 +681,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("../../../../../src/main.ts");
@@ -642,5 +689,5 @@ module.exports = __webpack_require__("../../../../../src/main.ts");
 
 /***/ })
 
-},[0]);
+},[1]);
 //# sourceMappingURL=main.bundle.js.map

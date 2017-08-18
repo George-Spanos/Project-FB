@@ -6,10 +6,12 @@ import { CardComponent } from './card/card.component';
 import {GameFunctions} from './game-functions.service';
 import {CardService} from './card/card.service';
 import {Card} from './card/card.model';
+import {DropdownDirective} from './shared/dropdown.directive';
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
