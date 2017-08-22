@@ -4,6 +4,7 @@ import {Output, EventEmitter} from '@angular/core';
 @Injectable()
 export class GameFunctions {
   gameArray: Card[];
+  winCondition: string; // this is where the win condition is stored
   InitializeArray() { /* Inittialization of the array. Returns the array, while having no input. */
     this.gameArray = [];
     for (let i = 0; i < 16; i++) {
@@ -20,7 +21,7 @@ export class GameFunctions {
       }else {
         letter = 'D';
       }
-      const card = new Card(false, false, true, no, false, letter);
+      const card = new Card(false, false, true, false, no, false, letter);
       this.gameArray.push(card);
     }
     return this.gameArray;
@@ -31,5 +32,12 @@ export class GameFunctions {
         [a[i - 1], a[j]] = [a[j], a[i - 1]];
     }
 
+  }
+  DeclareWin(data: any, array: Card[]) {
+    this.winCondition = data.target.innerHTML;
+    array.forEach( (el: Card) => { el.winPhase = true; } );
+  }
+  checkWinCondition(array: Card[], wincon: string) {
+    console.log(array, wincon);
   }
 }

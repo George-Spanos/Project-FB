@@ -1,5 +1,5 @@
   <div class="card"(dblclick)="Reveal()" (mouseenter)="ShowArrows()"
-   (mouseleave)="HideArrows()"> <!-- Show/Revealed arrows are the functions that are executed on hover -->
+   (mouseleave)="HideArrows()" (click)="WinArray()"> <!-- Show/Revealed arrows are the functions that are executed on hover -->
  <div class="revealed"  *ngIf="this.var.revealed"> <!-- revealed is a class that is displayed when each card is revealed -->
   <ng-content></ng-content> <!-- this is where the text is displayed via card.text and card.value -->
   </div>

@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"width:100%\">\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a href=\"#\">Same Numbers</a></li>\n        <li><a href=\"#\">Same Color</a></li>\n        <li><a href=\"#\">Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!--Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFuntions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
+module.exports = "<div style=\"width:100%\" >\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          > Same Numbers</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Color</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card (winarray)=\"this.gameFunctions.checkWinCondition($event, this.gameFunctions.winCondition)\"\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!-- Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFunctions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
 
 /***/ }),
 
@@ -59,11 +59,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AppComponent = (function () {
-    function AppComponent(gameFuntions) {
-        this.gameFuntions = gameFuntions;
+    function AppComponent(gameFunctions) {
+        this.gameFunctions = gameFunctions;
     }
     AppComponent.prototype.ResetGame = function () {
-        this.mainArray = this.gameFuntions.InitializeArray();
+        this.mainArray = this.gameFunctions.InitializeArray();
         alert('double click to reveal a card!');
     };
     AppComponent.prototype.ngOnInit = function () {
@@ -160,7 +160,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/card/card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card\"(dblclick)=\"Reveal()\" (mouseenter)=\"ShowArrows()\"\n   (mouseleave)=\"HideArrows()\"> <!-- Show/Revealed arrows are the functions that are executed on hover -->\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\"> <!-- revealed is a class that is displayed when each card is revealed -->\n  <ng-content></ng-content> <!-- this is where the text is displayed via card.text and card.value -->\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"this.var.hovered\" > <!-- these are the move arrows. Hovered is the value that is true when the move Phase is true -->\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\" >\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\" >\n\n    </div>\n    </div>\n</div>\n\n"
+module.exports = "  <div class=\"card\"(dblclick)=\"Reveal()\" (mouseenter)=\"ShowArrows()\"\n   (mouseleave)=\"HideArrows()\" (click)=\"WinArray()\"> <!-- Show/Revealed arrows are the functions that are executed on hover -->\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\"> <!-- revealed is a class that is displayed when each card is revealed -->\n  <ng-content></ng-content> <!-- this is where the text is displayed via card.text and card.value -->\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"this.var.hovered\" > <!-- these are the move arrows. Hovered is the value that is true when the move Phase is true -->\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\" >\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\" >\n\n    </div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -187,7 +187,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CardComponent = (function () {
     function CardComponent(cardService) {
         this.cardService = cardService;
+        this.winarray = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["r" /* EventEmitter */]();
     }
+    CardComponent.prototype.ngOnInit = function () { };
     CardComponent.prototype.Reveal = function () {
         var _this = this;
         // and this card in not revealed by the move Phase
@@ -207,7 +209,21 @@ var CardComponent = (function () {
             // after the click is finished, each card gets its Move Phase(boolean) reversed.
         }
     };
-    CardComponent.prototype.ngOnInit = function () { };
+    CardComponent.prototype.WinArray = function () {
+        if (this.var.winPhase) {
+            this.cardService.winArray.push(this.var);
+            this.var.revealed = true;
+            if (this.cardService.winArray.length >= 4) {
+                this.gameArray.forEach(function (el) {
+                    el.winPhase = false;
+                    el.MovePhase = false;
+                    el.revealPhase = false;
+                });
+                // console.log(this.cardService.winArray);
+                this.winarray.emit(this.cardService.winArray);
+            }
+        }
+    };
     CardComponent.prototype.ShowArrows = function () {
         if (this.var.MovePhase) {
             this.var.hovered = true;
@@ -228,6 +244,10 @@ __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */])(),
     __metadata("design:type", Array)
 ], CardComponent.prototype, "gameArray", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* Output */])(),
+    __metadata("design:type", Object)
+], CardComponent.prototype, "winarray", void 0);
 CardComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* Component */])({
         selector: 'app-card',
@@ -266,9 +286,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 // revealed is true when a card is revealed (either perma or temp)
 // text is the color of the card (examples: S = Spade, H = Heart etc.)
 var Card = (function () {
-    function Card(movephase, hovered, revealphase, value, revealed, text) {
+    function Card(movephase, hovered, revealphase, winPhase, value, revealed, text) {
         this.MovePhase = movephase;
         this.revealPhase = revealphase;
+        this.winPhase = winPhase;
         this.hovered = hovered;
         this.value = value;
         this.revealed = revealed;
@@ -278,7 +299,7 @@ var Card = (function () {
 }());
 Card = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [Boolean, Boolean, Boolean, Number, Boolean, String])
+    __metadata("design:paramtypes", [Boolean, Boolean, Boolean, Boolean, Number, Boolean, String])
 ], Card);
 
 //# sourceMappingURL=card.model.js.map
@@ -303,6 +324,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var CardService = (function () {
     function CardService() {
+        this.winArray = []; // the array that gets filled with the win condition cards
     }
     // the following functions are the move functions.
     CardService.prototype.moveLeft = function (card, array) {
@@ -576,7 +598,7 @@ var GameFunctions = (function () {
             else {
                 letter = 'D';
             }
-            var card = new __WEBPACK_IMPORTED_MODULE_0__card_card_model__["a" /* Card */](false, false, true, no, false, letter);
+            var card = new __WEBPACK_IMPORTED_MODULE_0__card_card_model__["a" /* Card */](false, false, true, false, no, false, letter);
             this.gameArray.push(card);
         }
         return this.gameArray;
@@ -587,6 +609,13 @@ var GameFunctions = (function () {
             _a = [a[j], a[i - 1]], a[i - 1] = _a[0], a[j] = _a[1];
         }
         var _a;
+    };
+    GameFunctions.prototype.DeclareWin = function (data, array) {
+        this.winCondition = data.target.innerHTML;
+        array.forEach(function (el) { el.winPhase = true; });
+    };
+    GameFunctions.prototype.checkWinCondition = function (array, wincon) {
+        console.log(array, wincon);
     };
     return GameFunctions;
 }());

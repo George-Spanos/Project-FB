@@ -4,7 +4,9 @@ import {Injectable} from '@angular/core';
 export class CardService {
 row: number; // the row of each clicked card
 col: number; // the column of each clicked card
+winArray= []; // the array that gets filled with the win condition cards
   constructor() {}
+
   // the following functions are the move functions.
   moveLeft(card: Card , array: Card[]) {
       for (let i = 0; i < 16 ; i++) { // Find the position and row/col of the clicked card

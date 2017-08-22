@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 
   import {Card} from './card.model';
  import {CardService} from './card.service';
@@ -11,7 +11,11 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 export class CardComponent implements OnInit {
   @Input() var: Card; // Each respective card object
   @Input() gameArray: Card[]; // Game array is binded to main array (one way bind!!)
+  @Output() winarray = new EventEmitter <Card[]>();
   hovered: boolean; // The variable that is used when the var.Movephase is true and the user hovers over a card
+  constructor(public cardService:  CardService) {
+  }
+  ngOnInit() { }
   Reveal() { // Reveal function. Checks if the card is on the reveal phase
     // and this card in not revealed by the move Phase
     if (this.var.revealPhase && !this.var.revealed) {
@@ -30,9 +34,20 @@ export class CardComponent implements OnInit {
     // after the click is finished, each card gets its Move Phase(boolean) reversed.
     }
   }
-  constructor(public cardService:  CardService) {
+  WinArray() {
+    if (this.var.winPhase) {
+      this.cardService.winArray.push(this.var);
+      this.var.revealed = true;
+      if (this.cardService.winArray.length >= 4) {
+        this.gameArray.forEach( (el: Card) => { el.winPhase = false;
+        el.MovePhase = false;
+        el.revealPhase = false;
+        } );
+        // console.log(this.cardService.winArray);
+        this.winarray.emit(this.cardService.winArray);
+      }
+    }
   }
-  ngOnInit() { }
   ShowArrows() { // these are the hover functions. They depend upon the local variable of hovered.
     if (this.var.MovePhase) {
       this.var.hovered = true;

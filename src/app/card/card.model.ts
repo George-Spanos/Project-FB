@@ -11,12 +11,15 @@ export class Card {
   public revealPhase: boolean;
   public MovePhase: boolean;
   public hovered: boolean;
+  public winPhase: boolean;
   public value: number;
   public revealed: boolean;
   public text: string;
-  constructor(movephase: boolean , hovered: boolean, revealphase: boolean, value: number, revealed: boolean, text: string) {
+  constructor(movephase: boolean , hovered: boolean, revealphase: boolean,
+     winPhase: boolean, value: number, revealed: boolean, text: string) {
     this.MovePhase = movephase;
     this.revealPhase = revealphase;
+    this.winPhase = winPhase;
     this.hovered = hovered;
     this.value = value;
     this.revealed = revealed;
