@@ -5,6 +5,7 @@ import {Output, EventEmitter} from '@angular/core';
 export class GameFunctions {
   gameArray: Card[];
   winCondition: string; // this is where the win condition is stored
+  isDisabled = false;
   InitializeArray() { /* Inittialization of the array. Returns the array, while having no input. */
     this.gameArray = [];
     for (let i = 0; i < 16; i++) {
@@ -39,5 +40,18 @@ export class GameFunctions {
   }
   checkWinCondition(array: Card[], wincon: string) {
     console.log(array, wincon);
+    const sum = array[0].value + array[1].value + array[2].value + array[3].value;
+    if (wincon === 'Same Numbers' && array[0].value === array[1].value && array[2].value === array[3].value
+      && array[0].value === array[3].value) {
+        alert ('You won by finding all the ' + array[0].value);
+    }else if (wincon === 'Same Color' && array[0].text === array[1].text && array[2].text === array[3].text
+      && array[0].text === array[3].text) {
+        alert ('You won by finding all the ' + array[0].text);
+    }else if (wincon === 'Everything else' && sum === 10 ) {
+        alert( ' You won by finding one of each color!');
+        }else {
+          alert ( 'You did not find what was expected of you. #SorrynotSorry. You lost!');
+    }
+    this.isDisabled = true;
   }
 }

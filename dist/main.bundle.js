@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"width:100%\" >\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          > Same Numbers</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Color</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card (winarray)=\"this.gameFunctions.checkWinCondition($event, this.gameFunctions.winCondition)\"\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!-- Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFunctions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
+module.exports = "<div style=\"width:100%\" >\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Numbers</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Color</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card (winarray)=\"this.gameFunctions.checkWinCondition($event, this.gameFunctions.winCondition)\"\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!-- Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFunctions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
 
 /***/ }),
 
@@ -571,6 +571,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var GameFunctions = (function () {
     function GameFunctions() {
+        this.isDisabled = false;
     }
     GameFunctions.prototype.InitializeArray = function () {
         this.gameArray = [];
@@ -616,6 +617,22 @@ var GameFunctions = (function () {
     };
     GameFunctions.prototype.checkWinCondition = function (array, wincon) {
         console.log(array, wincon);
+        var sum = array[0].value + array[1].value + array[2].value + array[3].value;
+        if (wincon === 'Same Numbers' && array[0].value === array[1].value && array[2].value === array[3].value
+            && array[0].value === array[3].value) {
+            alert('You won by finding all the ' + array[0].value);
+        }
+        else if (wincon === 'Same Color' && array[0].text === array[1].text && array[2].text === array[3].text
+            && array[0].text === array[3].text) {
+            alert('You won by finding all the ' + array[0].text);
+        }
+        else if (wincon === 'Everything else' && sum === 10) {
+            alert(' You won by finding one of each color!');
+        }
+        else {
+            alert('You did not find what was expected of you. #SorrynotSorry. You lost!');
+        }
+        this.isDisabled = true;
     };
     return GameFunctions;
 }());
