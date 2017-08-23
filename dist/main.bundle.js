@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"width:100%\" >\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Numbers</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Color</a></li>\n        <li><a (click)=\"this.gameFunctions.DeclareWin($event, mainArray)\"\n          >Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card (winarray)=\"this.gameFunctions.checkWinCondition($event, this.gameFunctions.winCondition)\"\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!-- Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFunctions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
+module.exports = "<div style=\"width:100%\" >\n<button class=\"btn btn-primary pull-left\" (click)=\"ResetGame()\">Start Game!\n  </button> <!-- Initialize game button -->\n\n  <div class=\"dropdown pull-right\" appDropdown>\n      <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Declare Win!\n      <span class=\"caret\"></span></button>\n      <ul class=\"dropdown-menu\">\n        <li><a (click)=\"gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Numbers</a></li>\n        <li><a (click)=\"gameFunctions.DeclareWin($event, mainArray)\"\n          >Same Color</a></li>\n        <li><a (click)=\"gameFunctions.DeclareWin($event, mainArray)\"\n          >Everything else</a></li>\n      </ul>\n    </div>\n</div>\n  <div class=\"board\"> <!-- Background Box (grey) -->\n    <app-card (passWin)=\"gameFunctions.checkWinCondition($event)\"\n    *ngFor=\"let card of mainArray\"\n    [var]=\"card\"\n    [gameArray]=\"mainArray\"> <!-- Card Component -->\n    {{card.value}}{{card.text}}\n    </app-card>\n  </div>\n<button class=\"btn btn-primary col-xs-12\" style=\"width: 30%; margin:10px 35% \"\n(click)=\"this.gameFunctions.shuffleArray(mainArray)\">Shuffle Array</button>\n"
 
 /***/ }),
 
@@ -61,6 +61,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AppComponent = (function () {
     function AppComponent(gameFunctions) {
         this.gameFunctions = gameFunctions;
+        this.mainArray = this.gameFunctions.gameArray; // the main game array that is binded to GameArray (one way bind)
     }
     AppComponent.prototype.ResetGame = function () {
         this.mainArray = this.gameFunctions.InitializeArray();
@@ -160,7 +161,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/card/card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card\"(dblclick)=\"Reveal()\" (mouseenter)=\"ShowArrows()\"\n   (mouseleave)=\"HideArrows()\" (click)=\"WinArray()\"> <!-- Show/Revealed arrows are the functions that are executed on hover -->\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\"> <!-- revealed is a class that is displayed when each card is revealed -->\n  <ng-content></ng-content> <!-- this is where the text is displayed via card.text and card.value -->\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"this.var.hovered\" > <!-- these are the move arrows. Hovered is the value that is true when the move Phase is true -->\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\">\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\" >\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\" >\n\n    </div>\n    </div>\n</div>\n\n"
+module.exports = "  <div class=\"card\"(dblclick)=\"Reveal()\" (mouseenter)=\"ShowArrows()\"\n   (mouseleave)=\"HideArrows()\" (click)=\"WinArray()\"> <!-- Show/Revealed arrows are the functions that are executed on hover -->\n <div class=\"revealed\"  *ngIf=\"this.var.revealed\"> <!-- revealed is a class that is displayed when each card is revealed -->\n  <ng-content></ng-content> <!-- this is where the text is displayed via card.text and card.value -->\n  </div>\n <div style=\"width:100%; height:100%; display:flex;\n justify-content:space-evenly;\"\n  *ngIf=\"this.var.hovered\" > <!-- these are the move arrows. Hovered is the value that is true when the move Phase is true -->\n    <div class=\"glyphicon glyphicon-arrow-up\"\n    (click)=\"this.cardService.moveUp(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-left\"\n    (click)=\"this.cardService.moveLeft(this.var,this.gameArray)\" >\n    </div>\n     <div class=\"glyphicon glyphicon-arrow-right\"\n     (click)=\"this.cardService.moveRight(this.var,this.gameArray)\" >\n    </div>\n    <div class=\"glyphicon glyphicon-arrow-down\"\n    (click)=\"this.cardService.moveDown(this.var,this.gameArray)\" >\n\n    </div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -187,7 +188,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CardComponent = (function () {
     function CardComponent(cardService) {
         this.cardService = cardService;
-        this.winarray = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["r" /* EventEmitter */]();
+        this.passWin = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["r" /* EventEmitter */]();
     }
     CardComponent.prototype.ngOnInit = function () { };
     CardComponent.prototype.Reveal = function () {
@@ -201,27 +202,25 @@ var CardComponent = (function () {
             }
             setTimeout(function () {
                 _this.var.revealed = !_this.var.revealed;
-                for (var i = 0; i < 16; i++) {
-                    _this.gameArray[i].MovePhase = !_this.gameArray[i].MovePhase;
-                }
+                // for (let i = 0; i < 16; i++) {
+                //   this.gameArray[i].MovePhase = !this.gameArray[i].MovePhase;
+                // }
+                _this.gameArray.forEach(function (el) { el.MovePhase = !el.MovePhase; });
                 alert('you can move a card!');
             }, 4000);
             // after the click is finished, each card gets its Move Phase(boolean) reversed.
         }
     };
     CardComponent.prototype.WinArray = function () {
-        if (this.var.winPhase) {
-            this.cardService.winArray.push(this.var);
-            this.var.revealed = true;
-            if (this.cardService.winArray.length >= 4) {
-                this.gameArray.forEach(function (el) {
-                    el.winPhase = false;
-                    el.MovePhase = false;
-                    el.revealPhase = false;
-                });
-                // console.log(this.cardService.winArray);
-                this.winarray.emit(this.cardService.winArray);
-            }
+        if (this.var.winPhase === true) {
+            // this.gameArray.forEach( (el: Card) => { el.hovered = true; } );
+            var popup = prompt('Do you want to win via row or column?', 'Type "row" for row and "column" for column');
+            this.passWin.emit([this.gameArray.indexOf(this.var), popup]);
+            this.gameArray.forEach(function (el) {
+                el.winPhase = false;
+                el.revealPhase = false;
+                el.MovePhase = false;
+            });
         }
     };
     CardComponent.prototype.ShowArrows = function () {
@@ -247,7 +246,7 @@ __decorate([
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* Output */])(),
     __metadata("design:type", Object)
-], CardComponent.prototype, "winarray", void 0);
+], CardComponent.prototype, "passWin", void 0);
 CardComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* Component */])({
         selector: 'app-card',
@@ -324,224 +323,232 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var CardService = (function () {
     function CardService() {
-        this.winArray = []; // the array that gets filled with the win condition cards
+        this.wincard = []; // the winning card
     }
     // the following functions are the move functions.
     CardService.prototype.moveLeft = function (card, array) {
-        for (var i = 0; i < 16; i++) {
-            if (card.text === array[i].text && card.value === array[i].value) {
-                this.row = Math.floor(i / 4) + 1;
-                // array[i].revealPhase = false;
-                // Ending the reveal phase (not needed prolly)
+        if (card.MovePhase === true) {
+            for (var i = 0; i < 16; i++) {
+                if (card.text === array[i].text && card.value === array[i].value) {
+                    this.row = Math.floor(i / 4) + 1;
+                    // array[i].revealPhase = false;
+                    // Ending the reveal phase (not needed prolly)
+                }
+                // when you find the row, you swap the elements without using the iterator.
+                // you reveal the card that gets pulled out (remember revealed is the same for temp reveal and perma reveal)
+                // set the reveal Phase of the perma revealed card to false.
             }
-            // when you find the row, you swap the elements without using the iterator.
-            // you reveal the card that gets pulled out (remember revealed is the same for temp reveal and perma reveal)
-            // set the reveal Phase of the perma revealed card to false.
-        }
-        var tempEl;
-        if (this.row === 1) {
-            tempEl = array[0];
-            array[0] = array[1];
-            array[1] = array[2];
-            array[2] = array[3];
-            array[3] = tempEl;
-            array[3].revealed = true;
-            array[3].revealPhase = false;
-        }
-        else if (this.row === 2) {
-            tempEl = array[4];
-            array[4] = array[5];
-            array[5] = array[6];
-            array[6] = array[7];
-            array[7] = tempEl;
-            array[7].revealed = true;
-            array[7].revealPhase = false;
-        }
-        else if (this.row === 3) {
-            tempEl = array[8];
-            array[8] = array[9];
-            array[9] = array[10];
-            array[10] = array[11];
-            array[11] = tempEl;
-            array[11].revealed = true;
-            array[11].revealPhase = false;
-        }
-        else {
-            tempEl = array[12];
-            array[12] = array[13];
-            array[13] = array[14];
-            array[14] = array[15];
-            array[15] = tempEl;
-            array[15].revealed = true;
-            array[15].revealPhase = false;
-        }
-        array.forEach(function (el) {
-            {
-                el.MovePhase = false;
-                el.hovered = false;
-                el.revealPhase = true;
+            var tempEl = void 0;
+            if (this.row === 1) {
+                tempEl = array[0];
+                array[0] = array[1];
+                array[1] = array[2];
+                array[2] = array[3];
+                array[3] = tempEl;
+                array[3].revealed = true;
+                array[3].revealPhase = false;
             }
-        });
-        alert('you can reveal a card!');
+            else if (this.row === 2) {
+                tempEl = array[4];
+                array[4] = array[5];
+                array[5] = array[6];
+                array[6] = array[7];
+                array[7] = tempEl;
+                array[7].revealed = true;
+                array[7].revealPhase = false;
+            }
+            else if (this.row === 3) {
+                tempEl = array[8];
+                array[8] = array[9];
+                array[9] = array[10];
+                array[10] = array[11];
+                array[11] = tempEl;
+                array[11].revealed = true;
+                array[11].revealPhase = false;
+            }
+            else {
+                tempEl = array[12];
+                array[12] = array[13];
+                array[13] = array[14];
+                array[14] = array[15];
+                array[15] = tempEl;
+                array[15].revealed = true;
+                array[15].revealPhase = false;
+            }
+            array.forEach(function (el) {
+                {
+                    el.MovePhase = false;
+                    el.hovered = false;
+                    el.revealPhase = true;
+                }
+            });
+            alert('you can reveal a card!');
+        }
     };
     CardService.prototype.moveRight = function (card, array) {
-        for (var i = 0; i < 16; i++) {
-            if (card.text === array[i].text && card.value === array[i].value) {
-                this.row = Math.floor(i / 4) + 1;
-                array[i].revealPhase = false;
+        if (card.MovePhase === true) {
+            for (var i = 0; i < 16; i++) {
+                if (card.text === array[i].text && card.value === array[i].value) {
+                    this.row = Math.floor(i / 4) + 1;
+                    array[i].revealPhase = false;
+                }
             }
-        }
-        var tempEl;
-        if (this.row === 1) {
-            tempEl = array[3];
-            array[3] = array[2];
-            array[2] = array[1];
-            array[1] = array[0];
-            array[0] = tempEl;
-            array[0].revealed = true;
-            array[0].revealPhase = false;
-        }
-        else if (this.row === 2) {
-            tempEl = array[7];
-            array[7] = array[6];
-            array[6] = array[5];
-            array[5] = array[4];
-            array[4] = tempEl;
-            array[4].revealed = true;
-            array[4].revealPhase = false;
-        }
-        else if (this.row === 3) {
-            tempEl = array[11];
-            array[11] = array[10];
-            array[10] = array[9];
-            array[9] = array[8];
-            array[8] = tempEl;
-            array[8].revealed = true;
-            array[8].revealPhase = false;
-        }
-        else {
-            tempEl = array[15];
-            array[15] = array[14];
-            array[14] = array[13];
-            array[13] = array[12];
-            array[12] = tempEl;
-            array[12].revealed = true;
-            array[12].revealPhase = false;
-        }
-        array.forEach(function (el) {
-            {
-                el.MovePhase = false;
-                el.hovered = false;
-                el.revealPhase = true;
+            var tempEl = void 0;
+            if (this.row === 1) {
+                tempEl = array[3];
+                array[3] = array[2];
+                array[2] = array[1];
+                array[1] = array[0];
+                array[0] = tempEl;
+                array[0].revealed = true;
+                array[0].revealPhase = false;
             }
-        });
-        setTimeout(alert('you can reveal a card!'), 2000);
+            else if (this.row === 2) {
+                tempEl = array[7];
+                array[7] = array[6];
+                array[6] = array[5];
+                array[5] = array[4];
+                array[4] = tempEl;
+                array[4].revealed = true;
+                array[4].revealPhase = false;
+            }
+            else if (this.row === 3) {
+                tempEl = array[11];
+                array[11] = array[10];
+                array[10] = array[9];
+                array[9] = array[8];
+                array[8] = tempEl;
+                array[8].revealed = true;
+                array[8].revealPhase = false;
+            }
+            else {
+                tempEl = array[15];
+                array[15] = array[14];
+                array[14] = array[13];
+                array[13] = array[12];
+                array[12] = tempEl;
+                array[12].revealed = true;
+                array[12].revealPhase = false;
+            }
+            array.forEach(function (el) {
+                {
+                    el.MovePhase = false;
+                    el.hovered = false;
+                    el.revealPhase = true;
+                }
+            });
+            setTimeout(alert('you can reveal a card!'), 2000);
+        }
     };
     CardService.prototype.moveUp = function (card, array) {
-        for (var i = 0; i < 16; i++) {
-            if (card.text === array[i].text && card.value === array[i].value) {
-                this.col = i % 4 + 1;
-                card.revealPhase = false;
+        if (card.MovePhase === true) {
+            for (var i = 0; i < 16; i++) {
+                if (card.text === array[i].text && card.value === array[i].value) {
+                    this.col = i % 4 + 1;
+                    card.revealPhase = false;
+                }
             }
-        }
-        var tempEl;
-        if (this.col === 1) {
-            tempEl = array[0];
-            array[0] = array[4];
-            array[4] = array[8];
-            array[8] = array[12];
-            array[12] = tempEl;
-            array[12].revealed = true;
-            array[12].revealPhase = false;
-        }
-        else if (this.col === 2) {
-            tempEl = array[1];
-            array[1] = array[5];
-            array[5] = array[9];
-            array[9] = array[13];
-            array[13] = tempEl;
-            array[13].revealed = true;
-            array[13].revealPhase = false;
-        }
-        else if (this.col === 3) {
-            tempEl = array[2];
-            array[2] = array[6];
-            array[6] = array[10];
-            array[10] = array[14];
-            array[14] = tempEl;
-            array[14].revealed = true;
-            array[14].revealPhase = false;
-        }
-        else {
-            tempEl = array[3];
-            array[3] = array[7];
-            array[7] = array[11];
-            array[11] = array[15];
-            array[15] = tempEl;
-            array[15].revealed = true;
-            array[15].revealPhase = false;
-        }
-        array.forEach(function (el) {
-            {
-                el.MovePhase = false;
-                el.hovered = false;
-                el.revealPhase = true;
+            var tempEl = void 0;
+            if (this.col === 1) {
+                tempEl = array[0];
+                array[0] = array[4];
+                array[4] = array[8];
+                array[8] = array[12];
+                array[12] = tempEl;
+                array[12].revealed = true;
+                array[12].revealPhase = false;
             }
-        });
-        setTimeout(alert('you can reveal a card!'), 2000);
+            else if (this.col === 2) {
+                tempEl = array[1];
+                array[1] = array[5];
+                array[5] = array[9];
+                array[9] = array[13];
+                array[13] = tempEl;
+                array[13].revealed = true;
+                array[13].revealPhase = false;
+            }
+            else if (this.col === 3) {
+                tempEl = array[2];
+                array[2] = array[6];
+                array[6] = array[10];
+                array[10] = array[14];
+                array[14] = tempEl;
+                array[14].revealed = true;
+                array[14].revealPhase = false;
+            }
+            else {
+                tempEl = array[3];
+                array[3] = array[7];
+                array[7] = array[11];
+                array[11] = array[15];
+                array[15] = tempEl;
+                array[15].revealed = true;
+                array[15].revealPhase = false;
+            }
+            array.forEach(function (el) {
+                {
+                    el.MovePhase = false;
+                    el.hovered = false;
+                    el.revealPhase = true;
+                }
+            });
+            setTimeout(alert('you can reveal a card!'), 2000);
+        }
     };
     CardService.prototype.moveDown = function (card, array) {
-        for (var i = 0; i < 16; i++) {
-            if (card.text === array[i].text && card.value === array[i].value) {
-                this.col = i % 4 + 1;
-                card.revealPhase = false;
+        if (card.MovePhase === true) {
+            for (var i = 0; i < 16; i++) {
+                if (card.text === array[i].text && card.value === array[i].value) {
+                    this.col = i % 4 + 1;
+                    card.revealPhase = false;
+                }
             }
-        }
-        var tempEl;
-        if (this.col === 1) {
-            tempEl = array[12];
-            array[12] = array[8];
-            array[8] = array[4];
-            array[4] = array[0];
-            array[0] = tempEl;
-            array[0].revealed = true;
-            array[0].revealPhase = false;
-        }
-        else if (this.col === 2) {
-            tempEl = array[13];
-            array[13] = array[9];
-            array[9] = array[5];
-            array[5] = array[1];
-            array[1] = tempEl;
-            array[1].revealed = true;
-            array[1].revealPhase = false;
-        }
-        else if (this.col === 3) {
-            tempEl = array[14];
-            array[14] = array[10];
-            array[10] = array[6];
-            array[6] = array[2];
-            array[2] = tempEl;
-            array[2].revealed = true;
-            array[2].revealPhase = false;
-        }
-        else {
-            tempEl = array[15];
-            array[15] = array[11];
-            array[11] = array[7];
-            array[7] = array[3];
-            array[3] = tempEl;
-            array[3].revealed = true;
-            array[3].revealPhase = false;
-        }
-        array.forEach(function (el) {
-            {
-                el.MovePhase = false;
-                el.hovered = false;
-                el.revealPhase = true;
+            var tempEl = void 0;
+            if (this.col === 1) {
+                tempEl = array[12];
+                array[12] = array[8];
+                array[8] = array[4];
+                array[4] = array[0];
+                array[0] = tempEl;
+                array[0].revealed = true;
+                array[0].revealPhase = false;
             }
-        });
-        setTimeout(alert('you can reveal a card!'), 2000);
+            else if (this.col === 2) {
+                tempEl = array[13];
+                array[13] = array[9];
+                array[9] = array[5];
+                array[5] = array[1];
+                array[1] = tempEl;
+                array[1].revealed = true;
+                array[1].revealPhase = false;
+            }
+            else if (this.col === 3) {
+                tempEl = array[14];
+                array[14] = array[10];
+                array[10] = array[6];
+                array[6] = array[2];
+                array[2] = tempEl;
+                array[2].revealed = true;
+                array[2].revealPhase = false;
+            }
+            else {
+                tempEl = array[15];
+                array[15] = array[11];
+                array[11] = array[7];
+                array[7] = array[3];
+                array[3] = tempEl;
+                array[3].revealed = true;
+                array[3].revealPhase = false;
+            }
+            array.forEach(function (el) {
+                {
+                    el.MovePhase = false;
+                    el.hovered = false;
+                    el.revealPhase = true;
+                }
+            });
+            setTimeout(alert('you can reveal a card!'), 2000);
+        }
     };
     return CardService;
 }());
@@ -613,26 +620,78 @@ var GameFunctions = (function () {
     };
     GameFunctions.prototype.DeclareWin = function (data, array) {
         this.winCondition = data.target.innerHTML;
-        array.forEach(function (el) { el.winPhase = true; });
+        array.forEach(function (el) {
+            el.winPhase = true;
+            // el.hovered = true;
+            el.MovePhase = false;
+            el.revealPhase = false;
+        });
     };
-    GameFunctions.prototype.checkWinCondition = function (array, wincon) {
-        console.log(array, wincon);
-        var sum = array[0].value + array[1].value + array[2].value + array[3].value;
-        if (wincon === 'Same Numbers' && array[0].value === array[1].value && array[2].value === array[3].value
-            && array[0].value === array[3].value) {
-            alert('You won by finding all the ' + array[0].value);
+    GameFunctions.prototype.checkWinCondition = function (data) {
+        console.log(data);
+        var index = data[0];
+        var rowcol = data[1];
+        var row = Math.floor(index / 4) + 1;
+        // code for row win
+        var col = index % 4 + 1;
+        if (rowcol === 'row') {
+            this.gameArray[row * 4 - 1].revealed = true;
+            this.gameArray[row * 4 - 2].revealed = true;
+            this.gameArray[row * 4 - 3].revealed = true;
+            this.gameArray[row * 4 - 4].revealed = true;
+            var sum = this.gameArray[row * 4 - 1].value + this.gameArray[row * 4 - 2].value
+                + this.gameArray[row * 4 - 3].value + this.gameArray[row * 4 - 4].value;
+            if (this.winCondition === 'Same Numbers' &&
+                this.gameArray[row * 4 - 1].value === this.gameArray[row * 4 - 2].value &&
+                this.gameArray[row * 4 - 3].value === this.gameArray[row * 4 - 4].value &&
+                this.gameArray[row * 4 - 4].value === this.gameArray[row * 4 - 1].value) {
+                alert('You won by finding all the ' + this.gameArray[row * 4 - 1].value + 'on the ' + row + 'row');
+            }
+            if (this.winCondition === 'Same Color' &&
+                this.gameArray[row * 4 - 1].text === this.gameArray[row * 4 - 2].text &&
+                this.gameArray[row * 4 - 3].text === this.gameArray[row * 4 - 4].text &&
+                this.gameArray[row * 4 - 4].text === this.gameArray[row * 4 - 1].text) {
+                alert('You won by finding all the ' + this.gameArray[row * 4 - 1].text + ' on the ' + row + ' row');
+            }
+            if (this.winCondition === 'Everything else' && sum === 10 &&
+                this.gameArray[row * 4 - 1].text !== this.gameArray[row * 4 - 2].text &&
+                this.gameArray[row * 4 - 1].text !== this.gameArray[col + 3].text &&
+                this.gameArray[row * 4 - 1].text !== this.gameArray[col + 4].text &&
+                this.gameArray[row * 4 - 2].text !== this.gameArray[row * 4 - 3].text &&
+                this.gameArray[row * 4 - 2].text !== this.gameArray[row * 4 - 4].text &&
+                this.gameArray[row * 4 - 3].text !== this.gameArray[row * 4 - 4].text) {
+                alert(' You won by finding one of each');
+            }
         }
-        else if (wincon === 'Same Color' && array[0].text === array[1].text && array[2].text === array[3].text
-            && array[0].text === array[3].text) {
-            alert('You won by finding all the ' + array[0].text);
+        if (rowcol === 'col') {
+            this.gameArray[col - 1].revealed = true;
+            this.gameArray[col + 3].revealed = true;
+            this.gameArray[col + 7].revealed = true;
+            this.gameArray[col + 11].revealed = true;
+            var sum = this.gameArray[col - 1].value + this.gameArray[col + 3].value
+                + this.gameArray[col + 7].value + this.gameArray[col + 11].value;
+            if (this.winCondition === 'Same Numbers' &&
+                this.gameArray[col - 1].value === this.gameArray[col + 3].value &&
+                this.gameArray[col + 7].value === this.gameArray[col + 11].value &&
+                this.gameArray[col + 11].value === this.gameArray[col - 1].value) {
+                alert('You won by finding all the ' + this.gameArray[col - 1].value + ' on the ' + col + ' column');
+            }
+            if (this.winCondition === 'Same Color' &&
+                this.gameArray[col - 1].text === this.gameArray[col + 3].text &&
+                this.gameArray[col + 7].text === this.gameArray[col + 11].text &&
+                this.gameArray[col + 11].text === this.gameArray[col - 1].text) {
+                alert('You won by finding all the ' + this.gameArray[col - 1].text + ' on the ' + col + ' column');
+            }
+            if (this.winCondition === 'Everything else' && sum === 10 &&
+                this.gameArray[col - 1].text !== this.gameArray[col + 3].text &&
+                this.gameArray[col + 1].text !== this.gameArray[col + 7].text &&
+                this.gameArray[col + 1].text !== this.gameArray[col + 11].text &&
+                this.gameArray[col + 3].text !== this.gameArray[col + 7].text &&
+                this.gameArray[col + 3].text !== this.gameArray[col + 11].text &&
+                this.gameArray[col + 7].text !== this.gameArray[col + 11].text) {
+                alert(' You won by finding one of each'); // misses stuff. Check the text(color) difference
+            }
         }
-        else if (wincon === 'Everything else' && sum === 10) {
-            alert(' You won by finding one of each color!');
-        }
-        else {
-            alert('You did not find what was expected of you. #SorrynotSorry. You lost!');
-        }
-        this.isDisabled = true;
     };
     return GameFunctions;
 }());

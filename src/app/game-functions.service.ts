@@ -36,22 +36,77 @@ export class GameFunctions {
   }
   DeclareWin(data: any, array: Card[]) {
     this.winCondition = data.target.innerHTML;
-    array.forEach( (el: Card) => { el.winPhase = true; } );
+    array.forEach( (el: Card) => {
+      el.winPhase = true;
+      // el.hovered = true;
+      el.MovePhase = false;
+      el.revealPhase = false;
+    } );
   }
-  checkWinCondition(array: Card[], wincon: string) {
-    console.log(array, wincon);
-    const sum = array[0].value + array[1].value + array[2].value + array[3].value;
-    if (wincon === 'Same Numbers' && array[0].value === array[1].value && array[2].value === array[3].value
-      && array[0].value === array[3].value) {
-        alert ('You won by finding all the ' + array[0].value);
-    }else if (wincon === 'Same Color' && array[0].text === array[1].text && array[2].text === array[3].text
-      && array[0].text === array[3].text) {
-        alert ('You won by finding all the ' + array[0].text);
-    }else if (wincon === 'Everything else' && sum === 10 ) {
-        alert( ' You won by finding one of each color!');
-        }else {
-          alert ( 'You did not find what was expected of you. #SorrynotSorry. You lost!');
+  checkWinCondition(data) {
+    console.log(data);
+    const index = data[0];
+    const rowcol = data[1];
+    const row = Math.floor(index / 4) + 1;
+      // code for row win
+    const col = index % 4 + 1;
+    if (rowcol === 'row') {
+      this.gameArray[row * 4 - 1].revealed = true;
+      this.gameArray[row * 4 - 2].revealed = true;
+      this.gameArray[row * 4 - 3].revealed = true;
+      this.gameArray[row * 4 - 4].revealed = true;
+      const sum = this.gameArray[row * 4 - 1].value + this.gameArray[row * 4 - 2].value
+      + this.gameArray[row * 4 - 3].value + this.gameArray[row * 4 - 4].value;
+      if (this.winCondition === 'Same Numbers' &&
+        this.gameArray[row * 4 - 1].value === this.gameArray[row * 4 - 2].value &&
+      this.gameArray[row * 4 - 3].value === this.gameArray[row * 4 - 4].value &&
+      this.gameArray[row * 4 - 4].value === this.gameArray[row * 4 - 1].value) {
+        alert ('You won by finding all the ' + this.gameArray[row * 4 - 1].value + 'on the ' + row + 'row');
+      }
+      if (this.winCondition === 'Same Color' &&
+        this.gameArray[row * 4 - 1].text === this.gameArray[row * 4 - 2].text &&
+      this.gameArray[row * 4 - 3].text === this.gameArray[row * 4 - 4].text &&
+      this.gameArray[row * 4 - 4].text === this.gameArray[row * 4 - 1].text) {
+        alert ('You won by finding all the ' + this.gameArray[row * 4 - 1].text + ' on the ' + row + ' row');
+      }
+      if (this.winCondition === 'Everything else' && sum === 10 &&
+        this.gameArray[row * 4 - 1].text !== this.gameArray[row * 4 - 2].text &&
+        this.gameArray[row * 4 - 1].text !== this.gameArray[col + 3].text &&
+        this.gameArray[row * 4 - 1].text !== this.gameArray[col + 4].text &&
+        this.gameArray[row * 4 - 2].text !== this.gameArray[row * 4 - 3].text &&
+        this.gameArray[row * 4 - 2].text !== this.gameArray[row * 4 - 4].text &&
+        this.gameArray[row * 4 - 3].text !== this.gameArray[row * 4 - 4].text) {
+        alert( ' You won by finding one of each');
+      }
     }
-    this.isDisabled = true;
+    if (rowcol === 'col') {
+      this.gameArray[col - 1].revealed = true;
+      this.gameArray[col + 3].revealed = true;
+      this.gameArray[col + 7].revealed = true;
+      this.gameArray[col + 11].revealed = true;
+      const sum = this.gameArray[col - 1].value + this.gameArray[col + 3].value
+      + this.gameArray[col + 7].value + this.gameArray[col + 11].value;
+      if (this.winCondition === 'Same Numbers' &&
+        this.gameArray[col - 1].value === this.gameArray[col + 3].value &&
+      this.gameArray[col + 7].value === this.gameArray[col + 11].value &&
+      this.gameArray[col + 11].value === this.gameArray[col - 1].value) {
+        alert ('You won by finding all the ' + this.gameArray[col - 1].value + ' on the ' + col + ' column');
+      }
+      if (this.winCondition === 'Same Color' &&
+        this.gameArray[col - 1].text === this.gameArray[col + 3].text &&
+      this.gameArray[col + 7].text === this.gameArray[col + 11].text &&
+      this.gameArray[col + 11].text === this.gameArray[col - 1].text) {
+        alert ('You won by finding all the ' + this.gameArray[col - 1].text + ' on the ' + col + ' column');
+      }
+      if (this.winCondition === 'Everything else' && sum === 10 &&
+        this.gameArray[col - 1].text !== this.gameArray[col + 3].text &&
+      this.gameArray[col + 1].text !== this.gameArray[col + 7].text &&
+      this.gameArray[col + 1].text !== this.gameArray[col + 11].text &&
+      this.gameArray[col + 3].text !== this.gameArray[col + 7].text &&
+      this.gameArray[col + 3].text !== this.gameArray[col + 11].text &&
+      this.gameArray[col + 7].text !== this.gameArray[col + 11].text) {
+        alert( ' You won by finding one of each'); // misses stuff. Check the text(color) difference
+      }
+    }
   }
 }

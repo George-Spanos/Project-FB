@@ -9,8 +9,7 @@ import {GameFunctions} from './game-functions.service';
   providers: [ GameFunctions, Card]
 })
 export class AppComponent implements OnInit {
-mainArray: Card[]; // the main game array that is binded to GameArray (one way bind)
-
+mainArray = this.gameFunctions.gameArray; // the main game array that is binded to GameArray (one way bind)
   constructor( public gameFunctions: GameFunctions) { }
   ResetGame() { // initializes the game from outside
     this.mainArray = this.gameFunctions.InitializeArray();

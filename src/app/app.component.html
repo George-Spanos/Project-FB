@@ -6,17 +6,17 @@
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Declare Win!
       <span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <li><a (click)="this.gameFunctions.DeclareWin($event, mainArray)"
+        <li><a (click)="gameFunctions.DeclareWin($event, mainArray)"
           >Same Numbers</a></li>
-        <li><a (click)="this.gameFunctions.DeclareWin($event, mainArray)"
+        <li><a (click)="gameFunctions.DeclareWin($event, mainArray)"
           >Same Color</a></li>
-        <li><a (click)="this.gameFunctions.DeclareWin($event, mainArray)"
+        <li><a (click)="gameFunctions.DeclareWin($event, mainArray)"
           >Everything else</a></li>
       </ul>
     </div>
 </div>
   <div class="board"> <!-- Background Box (grey) -->
-    <app-card (winarray)="this.gameFunctions.checkWinCondition($event, this.gameFunctions.winCondition)"
+    <app-card (passWin)="gameFunctions.checkWinCondition($event)"
     *ngFor="let card of mainArray"
     [var]="card"
     [gameArray]="mainArray"> <!-- Card Component -->

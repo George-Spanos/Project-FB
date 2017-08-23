@@ -7,7 +7,7 @@
  justify-content:space-evenly;"
   *ngIf="this.var.hovered" > <!-- these are the move arrows. Hovered is the value that is true when the move Phase is true -->
     <div class="glyphicon glyphicon-arrow-up"
-    (click)="this.cardService.moveUp(this.var,this.gameArray)">
+    (click)="this.cardService.moveUp(this.var,this.gameArray)" >
     </div>
     <div class="glyphicon glyphicon-arrow-left"
     (click)="this.cardService.moveLeft(this.var,this.gameArray)" >

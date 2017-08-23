@@ -11,7 +11,7 @@ import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular
 export class CardComponent implements OnInit {
   @Input() var: Card; // Each respective card object
   @Input() gameArray: Card[]; // Game array is binded to main array (one way bind!!)
-  @Output() winarray = new EventEmitter <Card[]>();
+  @Output() passWin = new EventEmitter<Array<any>>();
   hovered: boolean; // The variable that is used when the var.Movephase is true and the user hovers over a card
   constructor(public cardService:  CardService) {
   }
@@ -26,26 +26,24 @@ export class CardComponent implements OnInit {
     }
     setTimeout(() => {
       this.var.revealed = !this.var.revealed;
-    for (let i = 0; i < 16; i++) {
-      this.gameArray[i].MovePhase = !this.gameArray[i].MovePhase;
-    }
+    // for (let i = 0; i < 16; i++) {
+    //   this.gameArray[i].MovePhase = !this.gameArray[i].MovePhase;
+    // }
+    this.gameArray.forEach(( el: Card) => { el.MovePhase = !el.MovePhase; } );
     alert('you can move a card!'); }
     , 4000);
     // after the click is finished, each card gets its Move Phase(boolean) reversed.
     }
   }
   WinArray() {
-    if (this.var.winPhase) {
-      this.cardService.winArray.push(this.var);
-      this.var.revealed = true;
-      if (this.cardService.winArray.length >= 4) {
-        this.gameArray.forEach( (el: Card) => { el.winPhase = false;
-        el.MovePhase = false;
-        el.revealPhase = false;
-        } );
-        // console.log(this.cardService.winArray);
-        this.winarray.emit(this.cardService.winArray);
-      }
+    if (this.var.winPhase === true) {
+      // this.gameArray.forEach( (el: Card) => { el.hovered = true; } );
+    const popup = prompt('Do you want to win via row or column?', 'Type "row" for row and "column" for column');
+    this.passWin.emit([this.gameArray.indexOf(this.var), popup]);
+    this.gameArray.forEach((el: Card) => {el.winPhase = false;
+    el.revealPhase = false;
+    el.MovePhase = false;
+    } );
     }
   }
   ShowArrows() { // these are the hover functions. They depend upon the local variable of hovered.

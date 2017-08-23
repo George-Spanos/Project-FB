@@ -4,11 +4,12 @@ import {Injectable} from '@angular/core';
 export class CardService {
 row: number; // the row of each clicked card
 col: number; // the column of each clicked card
-winArray= []; // the array that gets filled with the win condition cards
+wincard= []; // the winning card
+rowcol: string; // win via row or column
   constructor() {}
 
   // the following functions are the move functions.
-  moveLeft(card: Card , array: Card[]) {
+  moveLeft(card: Card , array: Card[]) { if (card.MovePhase === true) {
       for (let i = 0; i < 16 ; i++) { // Find the position and row/col of the clicked card
         if (card.text === array[i].text && card.value === array[i].value) {
         this.row = Math.floor(i / 4) + 1;
@@ -60,8 +61,10 @@ winArray= []; // the array that gets filled with the win condition cards
       }
       } );
     alert('you can reveal a card!');
+    }
   }
   moveRight(card: Card, array: Card[]) {
+    if (card.MovePhase === true) {
      for (let i = 0; i < 16 ; i++) {
       if (card.text === array[i].text && card.value === array[i].value) {
         this.row = Math.floor(i / 4) + 1;
@@ -107,8 +110,10 @@ winArray= []; // the array that gets filled with the win condition cards
         el.revealPhase = true; }
       } );
       setTimeout(alert('you can reveal a card!'), 2000);
+    }
   }
   moveUp(card: Card, array: Card[]) {
+    if (card.MovePhase === true) {
  for (let i = 0; i < 16 ; i++) {
       if (card.text === array[i].text && card.value === array[i].value) {
         this.col = i % 4 + 1;
@@ -154,8 +159,10 @@ winArray= []; // the array that gets filled with the win condition cards
         el.revealPhase = true; }
       } );
       setTimeout(alert('you can reveal a card!'), 2000);
+    }
   }
   moveDown (card: Card, array: Card[]) {
+    if (card.MovePhase === true) {
     for (let i = 0; i < 16 ; i++) {
       if (card.text === array[i].text && card.value === array[i].value) {
         this.col = i % 4 + 1;
@@ -201,5 +208,6 @@ winArray= []; // the array that gets filled with the win condition cards
           el.revealPhase = true; }
         } );
       setTimeout(alert('you can reveal a card!'), 2000);
+      }
   }
 }
