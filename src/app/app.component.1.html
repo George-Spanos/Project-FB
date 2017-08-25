@@ -1,0 +1,33 @@
+<div class="container col-xs-12" >
+    <app-header></app-header>
+    <div class="row">
+      <div class="col-xs-12">
+<button class="btn btn-primary pull-left" (click)="ResetGame()">Start Game!
+  </button> <!-- Initialize game button -->
+  <div class="dropdown pull-right" appDropdown>
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Declare Win!
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a (click)="gameFunctions.DeclareWin($event, mainArray)"
+          >Same Numbers</a></li>
+        <li><a (click)="gameFunctions.DeclareWin($event, mainArray)"
+          >Same Color</a></li>
+        <li><a (click)="gameFunctions.DeclareWin($event, mainArray)"
+          >Everything else</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="board"> <!-- Background Box (grey) -->
+    <app-card (passWin)="gameFunctions.checkWinCondition($event)"
+    *ngFor="let card of mainArray"
+    [var]="card"
+    [gameArray]="mainArray"> <!-- Card Component -->
+    {{card.value}}{{card.text}}
+    </app-card>
+  </div>
+</div>
+
+</div>
+
+<button class="btn btn-primary col-xs-12" style="width: 30%; margin:10px 35% "
+(click)="this.gameFunctions.shuffleArray(mainArray)">Shuffle Array</button>

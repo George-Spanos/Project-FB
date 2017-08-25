@@ -1,0 +1,21 @@
+.board {
+  display:block;
+  position:relative;
+  background-color:lightgrey;
+  width: 570px;
+  height:650px;
+  box-sizing: border-box;
+  margin:auto;
+   min-width:422px;
+   border-radius: 10px;
+}
+  @media only screen and (max-width: 1024px) {
+  /* For mobile phones: */
+  .board {
+      width:60%;
+      height: 340px;
+      overflow: inherit;
+      background-color:lightgrey;
+      max-width: 422px;
+  }
+}
